@@ -12,7 +12,7 @@ public class JpaMain {
         EntityManager em = emf.createEntityManager();
 
         EntityTransaction tx = em.getTransaction();
-        tx.begin();
+        tx.begin();//시작
 
 
         Member member = new Member();
