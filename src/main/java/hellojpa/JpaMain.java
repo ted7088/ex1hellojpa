@@ -14,16 +14,22 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();//시작
 
+        try {
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJpa");
+            //영속
+            em.persist(member);
 
-        Member member = new Member();
-        member.setId(2L);
-        member.setName("HelloB");
 
-        em.persist(member);
 
-        tx.commit();
-
-        em.close();
+            tx.commit();
+        }catch (Exception e){
+            tx.rollback();
+        }finally {
+            em.close();
+        }
         emf.close();
 
     }
