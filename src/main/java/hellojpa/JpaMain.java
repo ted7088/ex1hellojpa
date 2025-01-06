@@ -16,7 +16,6 @@ public class JpaMain {
 
         try {
 
-
             em.flush();
 
             tx.commit();
