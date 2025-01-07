@@ -16,7 +16,10 @@ public class JpaMain {
 
         try {
 
-            em.flush();
+            Member member = new Member();
+            member.setUsername("a");
+
+            em.persist(member);
 
             tx.commit();
 
