@@ -4,19 +4,28 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@TableGenerator(
-        name = "MEMBER_SEQ_GENERATOR",
-        table = "MY_SEQUENCES",
-        pkColumnValue = "MEMBER_SEQ",initialValue = 1, allocationSize = 50)
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,
-            generator = "MEMBER_SEQ_GENERATOR")
+
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "MEMBER_SEQ_GENERATOR")
-    @Column(name = "name", nullable = false)
+
+
+
+    @Column(name = "USERNAME")
     private String username;
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    private Team team;
+
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 
     public Long getId() {
         return id;
@@ -34,7 +43,15 @@ public class Member {
         this.username = username;
     }
 
-    public Member() {
+    public Long getTeamId() {
+        return teamId;
     }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    @Column(name = "TEAM_ID")
+    private Long teamId;
 
 }
