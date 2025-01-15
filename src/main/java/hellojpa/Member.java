@@ -6,27 +6,19 @@ import java.util.Date;
 @Entity
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
-
-
     @Column(name = "USERNAME")
     private String username;
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+
+    @ManyToOne(fetch = FetchType.LAZY) // 기본적으로 지연 로딩 사용
+    @JoinColumn(name = "TEAM_ID") // 외래 키 매핑
     private Team team;
 
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
+    // Getter, Setter
     public Long getId() {
         return id;
     }
@@ -43,15 +35,25 @@ public class Member {
         this.username = username;
     }
 
-    public Long getTeamId() {
-        return teamId;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
-    @Column(name = "TEAM_ID")
-    private Long teamId;
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", team=" + team +
+                '}';
+    }
 }
